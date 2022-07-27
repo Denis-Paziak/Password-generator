@@ -49,18 +49,20 @@ let generateOption = {
 let arrGeneratePass = [];
 
 function generatePass() {
-    // generate Arr
-    if (generateOption.access.num == true) {
-        arrGeneratePass = arrGeneratePass.concat(generateOption.arrNum);
-    }
-    if (generateOption.access.str == true) {
-        arrGeneratePass = arrGeneratePass.concat(generateOption.arrStr);
-    }
-    if (generateOption.access.specSymbols == true) {
-        arrGeneratePass = arrGeneratePass.concat(generateOption.arrSpecSymbols);
-    }
 
     userArrFunc();
+    // generate Arr
+    if (generateOption.arrUser.length == 0) {
+        if (generateOption.access.num == true) {
+            arrGeneratePass = arrGeneratePass.concat(generateOption.arrNum);
+        }
+        if (generateOption.access.str == true) {
+            arrGeneratePass = arrGeneratePass.concat(generateOption.arrStr);
+        }
+        if (generateOption.access.specSymbols == true) {
+            arrGeneratePass = arrGeneratePass.concat(generateOption.arrSpecSymbols);
+        }
+    }
 
     // Option length
     generateOption.length = passwordLengthRangeInput.value;
@@ -97,6 +99,8 @@ function checkingOptions() {
 function userArrFunc() {
     if (userSymbolArr.value != "") {
         generateOption.arrUser = userSymbolArr.value.split("");
+    } else {
+        generateOption.arrUser = [];
     }
 
     if (generateOption.arrUser.length > 0) {
