@@ -5,76 +5,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            background: #222;
-            color: #fff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        p {
-            margin: 10px 0;
-        }
-
-        .generate {
-            border: 1px solid #fff;
-            background: transparent;
-            color: #fff;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: 0.6s;
-        }
-
-        .generate:hover {
-            background: #fff;
-            color: #222;
-        }
-
-        .pass-lenght {
-            color: #fff;
-            padding: 10px 20px;
-            border: 1px solid #fff;
-            background: transparent;
-        }
-    </style>
+    <title>Password generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <form class="passForm" action="">
-        <div>
-            <p>Довжина пароля</p>
-        </div>
-        <input class="pass-lenght" type="text" placeholder="Кількість символів">
-        <div>
-            <p>Цифри</p>
-            <input class="pass__checkbox" type="checkbox" value="number" name="" id="">
-        </div>
-
-        <div>
-            <p>Букви</p>
-            <input class="pass__checkbox" type="checkbox" value="string" name="" id="">
-        </div>
-        <div>
-            <p>Спец символи</p>
-            <input class="pass__checkbox" type="checkbox" value="specSimvol" name="" id="">
-        </div>
-    </form>
-    <p>Ваш пароль</p>
-    <p class="password">Ваш пароль</p>
-    <button class="generate">generate</button>
-    <p>Якщо нічого не вибрано пароль генерується тільки з цифр</p>
-
+    <div class="wrapper">
+        <form class="generator" onsubmit="return false;">
+            <div class="big-title">
+                <h2>Generator password</h2>
+            </div>
+            <div class="password-length">
+                <div class="password-length__left">
+                    <p class="title">Password length</p>
+                    <input class="password-length__range-input" type="range" name="" id="" value="8">
+                </div>
+                <div class="password-length__right">
+                    <input class="password-length__input" type="text" value="8">
+                </div>
+            </div>
+            <div class="symbols-used">
+                <p class="title">Symbols used</p>
+                <div class="radio-button">
+                    <input type="checkbox" name="" id="checkbox-number" value="num" checked>
+                    <label for="checkbox-number">Number</label>
+                </div>
+                <div class="radio-button">
+                    <input type="checkbox" name="" id="checkbox-string" value="str">
+                    <label for="checkbox-string">String</label>
+                </div>
+                <div class="radio-button">
+                    <input type="checkbox" name="" id="checkbox-symbol" value="specSymbols">
+                    <label for="checkbox-symbol">Symbol</label>
+                </div>
+            </div>
+            <div class="user-symbols">
+                <p class="title">User symbols</p>
+                <input class="user-symbols__input" type="text" placeholder="your sybols">
+            </div>
+            <div class="final-password">
+                <p class="title">Your password</p>
+                <input class="final-password__input" type="text">
+            </div>
+            <button class="but-generate">to generate</button>
+        </form>
+    </div>
     <script src="script.js"></script>
 </body>
 
