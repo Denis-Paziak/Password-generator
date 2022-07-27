@@ -1,67 +1,105 @@
-let arrNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-let arrStr = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m"];
-let arrSpecSimvol = ["!", "@", "$"];
-let finalArr = [];
+// Elements
+let passwordLengthInput = document.querySelector(".password-length__input");
+let passwordLengthRangeInput = document.querySelector(".password-length__range-input");
 
-let domPass = document.querySelector(".password");
+let finalPasswordInput = document.querySelector(".final-password__input");
+let butGenerate = document.querySelector(".but-generate");
 
-let options = {
-    length: 8,
-    number: true,
-    string: false,
-    specSimvol: false,
-    arrNumber: arrNum,
-    arrString: arrStr,
-    arrSpecSimvol: arrSpecSimvol
+let radioButtonArr = document.querySelectorAll(".radio-button input");
+let userSymbolArr = document.querySelector(".user-symbols__input");
+
+// Event Listener
+radioButtonArr.forEach(el => {
+    el.addEventListener("click", () => {
+        generateOption.access[el.value] = !generateOption.access[el.value];
+        checkingOptions();
+        generatePass();
+    });
+});
+
+passwordLengthRangeInput.addEventListener("input", () => {
+    if (passwordLengthRangeInput.value < 8) {
+        passwordLengthRangeInput.value = 8;
+    }
+    passwordLengthInput.value = passwordLengthRangeInput.value;
+});
+
+passwordLengthInput.addEventListener("input", () => {
+    if (passwordLengthInput.value > 100) {
+        passwordLengthInput.value = 100;
+    }
+    passwordLengthRangeInput.value = passwordLengthInput.value;
+});
+
+butGenerate.addEventListener("click", generatePass);
+// Option
+let generateOption = {
+    length: passwordLengthRangeInput.value,
+    arrNum: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    arrStr: ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"],
+    arrSpecSymbols: ["/", "?", "@", "!", "#", "$", "%", "&"],
+    arrUser: [],
+    access: {
+        num: true,
+        str: false,
+        specSymbols: false
+    }
 }
 
-
-let generateBut = document.querySelector(".generate");
-generateBut.addEventListener("click", generatePass);
+let arrGeneratePass = [];
 
 function generatePass() {
-    let passLenght = document.querySelector(".pass-lenght");
-    options.length = passLenght.value;
+    // generate Arr
+    if (generateOption.access.num == true) {
+        arrGeneratePass = arrGeneratePass.concat(generateOption.arrNum);
+    }
+    if (generateOption.access.str == true) {
+        arrGeneratePass = arrGeneratePass.concat(generateOption.arrStr);
+    }
+    if (generateOption.access.specSymbols == true) {
+        arrGeneratePass = arrGeneratePass.concat(generateOption.arrSpecSymbols);
+    }
 
-    auditOption();
-    finalArr.concat(options.arrNumber, options.arrString, options.arrSpecSimvol);
+    userArrFunc();
+
+    // Option length
+    generateOption.length = passwordLengthRangeInput.value;
+
+    // Result 
     let result = '';
 
-    for (let i = 0; i < options.length; i++) {
-        let random = Math.round(Math.random() * (finalArr.length - 1));
-        result += finalArr[random];
+    for (let i = 0; i < generateOption.length; i++) {
+        let random = Math.round(Math.random() * (arrGeneratePass.length - 1));
+        result += arrGeneratePass[random];
     }
-    domPass.innerHTML = result;
-    finalArr = [];
-}
+
+    finalPasswordInput.value = result;
+
+    // Zeroing
+    arrGeneratePass = [];
+};
 generatePass();
 
-function auditOption() {
-    if (options.length < 8) {
-        options.length = 8;
-    };
-
-    let inputs = document.querySelectorAll(".pass__checkbox");
-    inputs.forEach(el => {
-        if (el.checked) {
-            options[el.value] = true;
-        } else {
-            options[el.value] = false;
+function checkingOptions() {
+    let count = 0;
+    for (key in generateOption.access) {
+        if (generateOption.access[key] == true) {
+            count++;
         }
-    });
+    }
 
-    if (options.number) {
-        finalArr = finalArr.concat(options.arrNumber);
-    };
-    if (options.string) {
-        finalArr = finalArr.concat(options.arrString);
-    };
-    if (options.specSimvol) {
-        finalArr = finalArr.concat(options.arrSpecSimvol);
-    };
-
-    if (!options.number && !options.string && !options.specSimvol) {
-        finalArr = finalArr.concat(options.arrNumber);
+    if (count == 0) {
+        generateOption.access.num = true;
+        radioButtonArr[0].checked = true;
     }
 }
 
+function userArrFunc() {
+    if (userSymbolArr.value != "") {
+        generateOption.arrUser = userSymbolArr.value.split("");
+    }
+
+    if (generateOption.arrUser.length > 0) {
+        arrGeneratePass = generateOption.arrUser;
+    }
+}
