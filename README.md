@@ -1,3 +1,3 @@
 Beautiful password generator
 
-Public:https: //denis-paziak.github.io/Password-generator/
+Public:https: https://denis-paziak.github.io/Password-generator/
